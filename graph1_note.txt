@@ -1,0 +1,81 @@
+LAB PRACTICAL 1
+
+The line of code:
+
+EXPLANATION OF CODE LINE 1
+x = np.linspace(0, 20, 400)
+
+
+is used to generate an array of evenly spaced values for the variable \( x \) within a specified range. Here's a detailed breakdown of what it does:
+
+
+
+   Explanation
+
+1.  Function Used: `np.linspace(start, stop, num)`
+   -  `np.linspace`  is a function from the NumPy library that generates evenly spaced numbers over a specified interval.
+   -  Arguments:
+     - `start`: The starting value of the interval (here, \( 0 \)).
+     - `stop`: The ending value of the interval (here, \( 20 \)).
+     - `num`: The number of points to generate in the interval (here, \( 400 \)).
+
+2.  Purpose in the Code :
+   - The array `x` represents the \( x \)-axis values for plotting the constraints and objective function in the graphical method.
+   - It acts as the independent variable in the constraints, which are functions of \( x \) and \( y \).
+
+This is a standard approach in numerical computing and data visualization to handle continuous variables for plotting and analysis.
+
+EXPLANATION OF CODE LINE 2
+np.clip
+y1 = np.clip(y1, 0, None)
+y2 = np.clip(y2, 0, None)
+y3 = np.clip(y3, 0, None)
+
+The `np.clip()` function is used to limit the values of the arrays `y1`, `y2`, and `y3` to be greater than or equal to zero. Here's how it works:
+np.clip(array, min, max)
+array: The input array whose values need to be clipped.
+min: The lower limit (minimum value). Any values below this are replaced with min.
+max: The upper limit (maximum value). Any values above this are replaced with max.
+
+In this context, the clipping operation ensures that the values of `y1`, `y2`, and `y3` remain non-negative, which is essential for plotting constraints in linear programming problems.
+It prevents negative values from affecting the graphical representation of constraints.
+. Effect of np.clip(y1, 0, None)
+The function modifies the y1 array such that:
+
+All negative values in y1 are set to
+0.
+All non-negative values (0 or positive) remain unchanged.
+
+ Why Use np.clip Here?
+In the context of solving LP problems graphically:
+The constraints are defined only for non-negative values of the variables
+x and 𝑦
+(x≥0,y≥0).
+Clipping ensures that any calculated  y-values below 0 (resulting from the constraints) are ignored,
+ keeping the graph consistent with the problem's domain.
+
+
+EXPLANATION OF CODE LINE 3
+# Shade the feasible region
+plt.fill_between(x, np.minimum(np.minimum(y1, y2), y3), 0, color='gray', alpha=0.3, label='Feasible Region')
+This uses the `plt.fill_between()` function in Matplotlib to shade the feasible region defined by the constraints. Here's a breakdown of the code line:
+plt.fill_between(x, y, 0, color='gray', alpha=0.3, label='Feasible Region')
+x: The x-coordinates for the shading area, defined by the array `x`.
+y: The y-coordinates for the shading area, calculated as the minimum of `y1`, `y2`, and `y3` at each x-coordinate.
+0: The lower boundary for shading, set to 0 to fill the area below the constraints.
+color='gray': The color of the shaded region (gray in this case).
+
+#  SOLVING USING THE LINPROG FUNCTION FROM SCIPY LIBRARY
+The `linprog` function from the SciPy library is used to solve linear programming problems. Here's a brief explanation of how it works:
+The `linprog` function minimizes a linear objective function subject to linear equality and inequality constraints.
+It takes the following arguments:
+c: Coefficients of the linear objective function to be minimized.
+A_ub: Coefficients of the inequality constraints (left-hand side).
+b_ub: Values of the inequality constraints (right-hand side).
+A_eq: Coefficients of the equality constraints (left-hand side).
+b_eq: Values of the equality constraints (right-hand side).
+bounds: Bounds for the variables.
+method: Optimization method to use (default is 'simplex').
+The function returns an OptimizeResult object containing the solution to the linear programming problem.
+The solution includes the optimal values of the decision variables that minimize the objective function.
+
